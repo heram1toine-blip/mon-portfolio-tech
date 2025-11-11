@@ -12,7 +12,7 @@ Enregistre ce fichier sous `CV.md` à la racine du même repo : ton site GitHub 
 # Prénom NOM
 **Data Scientist | Cloud & Cyber-enthusiast**  
 📍 Ville, France | 📞 +33 6 12 34 56 78 | ✉️ prenom.nom@email.fr  
-🔗 [GitHub](https://github.com/tonpseudo) | [LinkedIn](https://linkedin.com/in/tonpseudo) | [Portfolio](https://github.com/tonpseudo/mon-portfolio-tech)
+🔗 [GitHub](https://github.com/heram1toine-blip) | [LinkedIn](https://linkedin.com/in/tonpseudo) | [Portfolio](https://github.com/heram1toine-blip/mon-portfolio-tech)
 
 ---
 
@@ -40,7 +40,7 @@ Débutant·e motivé·e en reconversion tech, je cherche un poste de Data/Cloud/
 
 ---
 
-## 📂 PROJETS CLÉS (voir [Portfolio](https://github.com/tonpseudo/mon-portfolio-tech))
+## 📂 PROJETS CLÉS (voir [Portfolio](https://github.com/heram1toine-blip/mon-portfolio-tech))
 1. **Image Classifier – CIFAR-10**  
    CNN 92 % accuracy, PyTorch + Fast.ai, notebook + modèle sauvegardé.  
 2. **Terraform IaC**  
