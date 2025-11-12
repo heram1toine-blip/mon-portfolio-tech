@@ -1,0 +1,87 @@
+name: Purge specified paths from main history
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type YES to confirm the destructive purge (required)."
+        required: true
+        default: "NO"
+
+jobs:
+  purge-history:
+    runs-on: ubuntu-latest
+    # Only run when the user explicitly confirms by typing YES
+    if: ${{ github.event.inputs.confirm == 'YES' }}
+    steps:
+      - name: Checkout full repository (no token persisted)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install git-filter-repo
+        run: |
+          python3 -m pip install --user git-filter-repo
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
+
+      - name: Ensure FORCE_PUSH_TOKEN secret is present and configure origin with it
+        env:
+          FORCE_PUSH_TOKEN: ${{ secrets.FORCE_PUSH_TOKEN }}
+        run: |
+          if [ -z "${FORCE_PUSH_TOKEN}" ]; then
+            echo "Missing FORCE_PUSH_TOKEN secret. Create a repo secret with a PAT (repo scope) and retry." >&2
+            exit 1
+          fi
+          # Replace origin URL to use token for authenticated push
+          git remote set-url origin https://x-access-token:${FORCE_PUSH_TOKEN}@github.com/${{ github.repository }}.git
+
+      - name: Fetch and checkout main
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+
+      - name: Preview commits touching the targeted paths (informational)
+        run: |
+          echo "Commits touching data-analysis (if any):"
+          git log --all --pretty=format:'%h %an %ad %s' -- data-analysis || true
+          echo "Commits touching cloud-projects (if any):"
+          git log --all --pretty=format:'%h %an %ad %s' -- cloud-projects || true
+          echo "Commits touching cybersecurity (if any):"
+          git log --all --pretty=format:'%h %an %ad %s' -- cybersecurity || true
+          echo "Commits touching machine-learning (if any):"
+          git log --all --pretty=format:'%h %an %ad %s' -- machine-learning || true
+
+      - name: Run git-filter-repo to remove the four top-level paths from main
+        run: |
+          git filter-repo --invert-paths \
+            --paths data-analysis \
+            --paths cloud-projects \
+            --paths cybersecurity \
+            --paths machine-learning \
+            --refs refs/heads/main
+
+      - name: Verify the paths were removed from history
+        run: |
+          for p in data-analysis cloud-projects cybersecurity machine-learning; do
+            if git log --all -- "$p" | grep -q .; then
+              echo "ERROR: path still appears in history: $p" >&2
+              git log --all -- "$p" || true
+              exit 1
+            else
+              echo "Verified removed: $p"
+            fi
+          done
+          # Also ensure tip doesn't contain the files
+          git checkout main
+          git ls-files | egrep '^(data-analysis|cloud-projects|cybersecurity|machine-learning)$' && \
+            (echo "ERROR: one of the paths still exists at tip" >&2; exit 1) || echo "Paths absent from tip of main"
+
+      - name: Force-push rewritten main to origin
+        run: |
+          git push --force --prune origin refs/heads/main:refs/heads/main
+
+      - name: Local cleanup (optional)
+        run: |
+          git reflog expire --expire=now --all || true
+          git gc --prune=now --aggressive || true
