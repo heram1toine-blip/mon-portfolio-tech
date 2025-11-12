@@ -9,10 +9,10 @@
 Enregistre ce fichier sous `CV.md` à la racine du même repo : ton site GitHub deviendra ton **CV dynamique** (mise à jour auto à chaque `push`).
 
 ```markdown
-# Prénom NOM
+# Wilfried VANE ZINSOU
 **Data Scientist | Cloud & Cyber-enthusiast**  
-📍 Ville, France | 📞 +33 6 12 34 56 78 | ✉️ prenom.nom@email.fr  
-🔗 [GitHub](https://github.com/heram1toine-blip) | [LinkedIn](https://linkedin.com/in/tonpseudo) | [Portfolio](https://github.com/heram1toine-blip/mon-portfolio-tech)
+📍 Ville, Libreville | 📞 +241 74 56 86 58 | ✉️ heram1toine@gmail.com
+🔗 [GitHub](https://github.com/heram1toine-blip) | [LinkedIn](https://linkedin.com/in/hermanvz) | [Portfolio](https://github.com/heram1toine-blip/mon-portfolio-tech)
 
 ---
 
@@ -53,13 +53,13 @@ Débutant·e motivé·e en reconversion tech, je cherche un poste de Data/Cloud/
 ---
 
 ## 🏫 FORMATION INITIALE
-**Licence/Master/Autre** – Université XXXX – 20XX  
+**Licence BSc Computer Science– Midrand Graduate University 2006 – 2008  
 *Mention bien* – projet fin d’études : « … »
 
 ---
 
 ## 🌍 LANGUES
-Français (natif) – Anglais (professionnel, TOEIC 850)
+Français (natif) – Anglais (professionnel, IELTS)
 
 ---
 
